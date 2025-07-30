@@ -12,9 +12,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 
 // Configurações da Base de Dados (SUBSTITUA PELOS SEUS DADOS DA HOSTGATOR)
 $servername = "localhost"; // Geralmente localhost na HostGator
-$username = "SEU_UTILIZADOR_MYSQL"; // Substitua pelo seu utilizador MySQL
-$password = "SUA_PALAVRA_PASSE_MYSQL"; // Substitua pela sua palavra-passe MySQL
-$dbname = "SEU_NOME_DA_BASE_DE_DADOS"; // Substitua pelo nome da sua base de dados
+$username = "everis50_Database_lookdehoje"; // Substitua pelo seu utilizador MySQL
+$password = "LooksdeHoje@2025"; // Substitua pela sua palavra-passe MySQL
+$dbname = "everis50_Database_lookdehoje"; // Substitua pelo nome da sua base de dados
 
 // Conexão com a Base de Dados
 $conn = new mysqli($servername, $username, $password, $dbname);

@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vitrine de Aluguel de Roupas</title>
+    <!-- Inclui o Tailwind CSS para estilização rápida e responsiva -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Importa a fonte Playfair Display para todo o site -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        html {
+            scroll-behavior: smooth; /* Adiciona scroll suave para âncoras */
+        }
+        body {
+            font-family: 'Playfair Display', serif; /* Define a fonte Playfair Display para todo o corpo */
+            background-color: #fbf8f5; /* Restaurado para um tom de branco creme/marfim mais quente */
+            padding-top: 4rem; /* Ajustado padding-top para compensar o header fixo (aprox. 64px) */
+        }
+        /* Estilo para o botão do WhatsApp - mantendo a cor reconhecível, mas com tom pastel */
+        .whatsapp-button {
+            background-color: #34D399; /* Verde esmeralda mais suave */
+            color: white;
+            padding: 0.75rem 1.5rem; /* Reduzido o padding */
+            border-radius: 9999px; /* Borda arredondada */
+            font-weight: bold;
+            font-size: 0.9rem; /* Tamanho da fonte ligeiramente menor */
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            transition: background-color 0.3s ease, transform 0.2s ease-out, box-shadow 0.2s ease-out; /* Adicionado transform e box-shadow para hover */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra inicial */
+        }
+        .whatsapp-button:hover {
+            background-color: #10B981; /* Tom mais escuro no hover */
+            transform: translateY(-2px); /* Levanta o botão */
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); /* Sombra maior no hover */
+        }
+        /* Estilo para o botão do Instagram - mantendo o gradiente, mas talvez mais sutil */
+        .instagram-button {
+            background: linear-gradient(45deg, #e09b3d 0%,#d8623d 25%,#c83a4d 50%,#b83070 75%,#a8268f 100%); /* Gradiente do Instagram um pouco mais suave */
+            color: white;
+            padding: 0.75rem 1.5rem; /* Reduzido o padding */
+            border-radius: 9999px; /* Borda arredondada */
+            font-weight: bold;
+            font-size: 0.9rem; /* Tamanho da fonte ligeiramente menor */
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            transition: opacity 0.3s ease, transform 0.2s ease-out, box-shadow 0.2s ease-out; /* Adicionado transform e box-shadow para hover */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra inicial */
+        }
+        .instagram-button:hover {
+            opacity: 0.9; /* Leve opacidade no hover */
+            transform: translateY(-2px); /* Levanta o botão */
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); /* Sombra maior no hover */
+        }
+        /* Estilo para o botão de Email */
+        .email-button {
+            background-color: #6B7280; /* Cinza suave */
+            color: white;
+            padding: 0.75rem 1.5rem; /* Reduzido o padding */
+            border-radius: 9999px; /* Borda arredondada */
+            font-weight: bold;
+            font-size: 0.9rem; /* Tamanho da fonte ligeiramente menor */
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            transition: background-color 0.3s ease, transform 0.2s ease-out, box-shadow 0.2s ease-out; /* Adicionado transform e box-shadow para hover */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra inicial */
+        }
+        .email-button:hover {
+            background-color: #4B5563; /* Tom mais escuro no hover */
+            transform: translateY(-2px); /* Levanta o botão */
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); /* Sombra maior no hover */
+        }
+        /* Estilo para o botão de Sugestão Gemini */
+        .gemini-button {
+            background-color: #57534e; /* stone-700 */
+            color: white;
+            padding: 0.75rem 1.5rem; /* Reduzido o padding */
+            border-radius: 9999px; /* Borda arredondada */
+            font-weight: bold;
+            font-size: 0.9rem; /* Tamanho da fonte ligeiramente menor */
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            transition: background-color 0.3s ease, transform 0.2s ease-out, box-shadow 0.2s ease-out; /* Adicionado transform e box-shadow para hover */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra inicial */
+        }
+        .gemini-button:hover {
+            background-color: #44403c; /* stone-800 */
+            transform: translateY(-2px); /* Levanta o botão */
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); /* Sombra maior no hover */
+        }
+
+        /* Estilo para o modal (o fundo escuro) */
+        .modal {
+            display: none; /* Escondido por padrão */
+            position: fixed; /* Posição fixa na tela */
+            z-index: 100; /* Acima de outros elementos */
+            left: 0;
+            top: 0;
+            width: 100%; /* Largura total */
+            height: 100%; /* Altura total */
+            overflow: auto; /* Habilita scroll se o conteúdo for grande */
+            background-color: rgba(0,0,0,0.6); /* Fundo semi-transparente */
+            justify-content: center;
+            align-items: center;
+            opacity: 0; /* Começa invisível */
+            transition: opacity 0.3s ease-out; /* Transição para o fundo */
+        }
+        .modal.modal-active {
+            opacity: 1; /* Fundo visível */
+        }
+        .modal-content {
+            background-color: #fff; /* Fundo do modal branco para contraste */
+            margin: auto;
+            padding: 2.5rem;
+            border-radius: 1.5rem; /* Cantos mais arredondados */
+            width: 90%;
+            max-width: 800px; /* Largura máxima para o conteúdo */
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            position: relative;
+            opacity: 0; /* Começa invisível */
+            transform: translateY(-20px); /* Começa ligeiramente acima */
+            transition: opacity 0.3s ease-out, transform 0.3s ease-out; /* Transição para o conteúdo */
+        }
+        .modal.modal-active .modal-content {
+            opacity: 1; /* Conteúdo visível */
+            transform: translateY(0); /* Desliza para a posição normal */
+        }
+        .close-button {
+            color: #aaa;
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            font-size: 2rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .close-button:hover,
+        .close-button:focus {
+            color: #333;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Estilos específicos para o carrossel */
+        .carousel-container {
+            position: relative; /* Importante para posicionar os filhos */
+            width: 100%;
+            /* Removido max-width fixo daqui, agora controlado por classes Tailwind no HTML */
+            margin: 0 auto;
+            overflow: hidden; /* Esconde as imagens que não estão ativas */
+            border-radius: 0.75rem; /* rounded-lg */
+            border: 4px solid #a8a29e; /* Restaurado para border-stone-400 */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-lg */
+            /* Define uma proporção para o contêiner para evitar que ele "pule" */
+            padding-bottom: 56.25%; /* Ajustado para 16:9 (altura/largura = 9/16 = 0.5625) */
+            height: 0; /* Reseta a altura para que padding-bottom funcione como proporção */
+            cursor: grab; /* Indica que o elemento pode ser "arrastado" */
+        }
+        .carousel-container:active {
+            cursor: grabbing; /* Cursor quando está a ser "arrastado" */
+        }
+        .carousel-image {
+            position: absolute; /* Empilha as imagens uma sobre a outra */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%; /* Preenche o contêiner */
+            object-fit: cover; /* Garante que as imagens cubram a área sem distorção */
+            opacity: 0; /* Começa invisível */
+            transition: opacity 1s ease-in-out; /* Transição mais longa e suave */
+        }
+        .carousel-image.active {
+            opacity: 1; /* Totalmente visível quando ativa */
+        }
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+        .dot {
+            height: 12px;
+            width: 12px;
+            margin: 0 5px;
+            background-color: #d6d3d1; /* Restaurado para stone-300 */
+            border-radius: 50%;
+            display: inline-block;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .dot.active {
+            background-color: #57534e; /* Restaurado para stone-700 */
+        }
+
+        /* Estilos para os links do cabeçalho */
+        .header-link {
+            position: relative;
+            padding-bottom: 0.25rem; /* Espaço para o underline */
+            font-weight: bold; /* Adicionado para deixar o texto em negrito */
+        }
+        .header-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 50%;
+            background-color: #57534e; /* Restaurado para a cor do stone-700 */
+            transition: width 0.3s ease-out, left 0.3s ease-out;
+        }
+        .header-link:hover::after,
+        .header-link:focus::after {
+            width: 100%;
+            left: 0;
+        }
+
+        /* Estilos para as setas de navegação do carrossel */
+        .carousel-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5); /* Fundo semi-transparente */
+            color: white;
+            padding: 0.5rem 0.75rem;
+            border-radius: 9999px; /* Totalmente arredondado */
+            cursor: pointer;
+            z-index: 10; /* Acima das imagens */
+            font-size: 1.5rem;
+            line-height: 1;
+            transition: background-color 0.3s ease;
+        }
+        .carousel-arrow:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+        .carousel-arrow.left {
+            left: 1rem;
+        }
+        .carousel-arrow.right {
+            right: 1rem;
+        }
+
+        /* Estilos para o menu de navegação móvel */
+        #mainNavigation {
+            transition: opacity 0.3s ease-out, transform 0.3s ease-out; /* Transição para o menu */
+            transform: translateY(-10px); /* Começa ligeiramente acima */
+            opacity: 0; /* Começa invisível */
+            pointer-events: none; /* Impede cliques quando invisível */
+            /* Tailwind classes for mobile menu positioning */
+            position: absolute;
+            top: 100%; /* Position below the header */
+            left: 0;
+            width: 100%;
+            background-color: white; /* Background for the dropdown menu */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+            border-radius: 0.5rem;
+            z-index: 40; /* Needs to be lower than modal, but above other content */
+        }
+        #mainNavigation.is-open {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto; /* Permite cliques quando visível */
+            display: flex; /* Ensure it's flex when open */
+            flex-direction: column; /* Stack items vertically */
+            align-items: center; /* Center items horizontally */
+        }
+        /* Ajuste para telas maiores, para garantir que o menu não tenha transições quando não é mobile */
+        @media (min-width: 640px) { /* sm breakpoint */
+            #mainNavigation {
+                transition: none;
+                transform: none;
+                opacity: 1;
+                pointer-events: auto;
+                display: flex !important; /* Force flex on larger screens */
+                position: static; /* Reset position */
+                top: auto;
+                left: auto;
+                width: auto;
+                background-color: transparent;
+                box-shadow: none;
+                padding: 0;
+                border-radius: 0;
+                z-index: auto;
+            }
+        }
+    </style>
+</head>
+<body class="text-stone-800">
+    <!-- Cabeçalho / Barra de Navegação -->
+    <header class="bg-white shadow-md py-2 fixed top-0 left-0 right-0 z-50">
+        <div class="container mx-auto px-4 flex justify-between items-center relative">
+            <!-- Logo e Título agrupados -->
+            <div class="flex items-center">
+                <img src="logo.look.jpg" alt="Look de Hoje Logo" class="h-12 w-auto rounded-full">
+                <h1 class="text-3xl font-bold text-stone-700 ml-3">Look de Hoje</h1>
+            </div>
+
+            <!-- Botão do menu hamburger (visível apenas em telas pequenas) -->
+            <button id="mobileMenuButton" class="sm:hidden text-stone-700 focus:outline-none">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+
+            <!-- Links de navegação (escondidos por padrão em telas pequenas, flex em telas maiores) -->
+            <nav id="mainNavigation" class="hidden sm:flex flex-col sm:flex-row absolute sm:relative top-full left-0 w-full sm:w-auto bg-white sm:bg-transparent shadow-lg sm:shadow-none py-4 sm:py-0 mt-2 sm:mt-0 rounded-lg sm:rounded-none">
+                <ul class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6 px-4 sm:px-0">
+                    <li><a href="#" class="text-base text-stone-700 hover:text-stone-600 transition duration-300 header-link" onclick="closeMobileMenu(); showSection('mainContent')">Home</a></li>
+                    <li><a href="#colecao" class="text-base text-stone-700 hover:text-stone-600 transition duration-300 header-link" onclick="closeMobileMenu(); showSection('mainContent')">Coleção</a></li>
+                    <li><a href="#" class="text-base text-stone-700 hover:text-stone-600 transition duration-300 header-link" onclick="closeMobileMenu(); openHowItWorksModal();">Como Funciona</a></li>
+                    <li><a href="#" class="text-base text-stone-700 hover:text-stone-600 transition duration-300 header-link" onclick="closeMobileMenu(); openContactModal();">Contato</a></li>
+                    <li><a href="#" class="text-base text-stone-700 hover:text-stone-600 transition duration-300 header-link" onclick="closeMobileMenu(); showAdminPanel();">Painel Admin</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Conteúdo Principal do Site (Visível por padrão) -->
+    <div id="mainContent">
+        <section class="bg-stone-200 py-20 text-center rounded-b-3xl shadow-lg mx-4 mt-4">
+            <div class="container mx-auto px-4">
+                <h2 class="text-5xl font-extrabold text-stone-800 mb-4 leading-tight">Encontre o Look Perfeito para Cada Ocasião!</h2>
+                <p class="text-xl text-stone-600 mb-8 max-w-2xl mx-auto">Alugue roupas deslumbrantes e economize. Estilo e elegância ao seu alcance.</p>
+                
+                <!-- Carrossel de Imagens -->
+                <div class="carousel-container mb-8 max-w-2xl" id="mainCarousel">
+                    <img src="https://placehold.co/600x400/FFC0CB/FFFFFF?text=Vestido+Vermelho" alt="Modelo com Look Elegante 1" class="carousel-image active">
+                    <img src="https://placehold.co/600x400/DDA0DD/FFFFFF?text=Vestido+Roxo" alt="Modelo com Look Elegante 2" class="carousel-image">
+                    <img src="https://placehold.co/600x400/87CEEB/FFFFFF?text=Terno+Claro" alt="Modelo com Look Elegante 3" class="carousel-image">
+
+                    <!-- Setas de Navegação do Carrossel -->
+                    <a class="carousel-arrow left" onclick="plusSlides(-1)">&#10094;</a>
+                    <a class="carousel-arrow right" onclick="plusSlides(1)">&#10095;</a>
+                </div>
+                <!-- Pontos de navegação do carrossel -->
+                <div class="carousel-dots">
+                    <span class="dot active" onclick="currentSlide(0)"></span>
+                    <span class="dot" onclick="currentSlide(1)"></span>
+                    <span class="dot" onclick="currentSlide(2)"></span>
+                </div>
+
+                <a href="#colecao" class="bg-stone-700 hover:bg-stone-800 text-white font-bold py-4 px-8 rounded-full text-lg shadow-lg transition duration-300 transform hover:scale-105 mt-8 inline-block">Ver Coleção Agora</a>
+            </div>
+        </section>
+
+        <!-- Seção Nossa Coleção -->
+        <section id="colecao" class="container mx-auto px-4 py-16">
+            <h2 class="text-4xl font-bold text-center text-stone-800 mb-12">Nossa Coleção Exclusiva</h2>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10" id="productGrid">
+                <!-- Os produtos serão renderizados aqui pelo JavaScript -->
+            </div>
+        </section>
+    </div> <!-- Fim do mainContent -->
+
+    <!-- Painel de Administração -->
+    <section id="adminPanel" class="hidden container mx-auto px-4 py-16">
+        <h2 class="text-4xl font-bold text-center text-stone-800 mb-12">Painel de Administração</h2>
+
+        <div class="bg-white rounded-2xl shadow-xl p-8 mb-10">
+            <h3 class="text-2xl font-semibold text-stone-800 mb-6">Adicionar Nova Roupa</h3>
+            <form id="addProductForm" class="space-y-4">
+                <input type="hidden" id="productIdToEdit" value=""> <!-- Campo oculto para o ID de edição -->
+                <div>
+                    <label for="productCode" class="block text-stone-700 text-sm font-bold mb-2">Código da Peça:</label>
+                    <input type="text" id="productCode" class="shadow appearance-none border rounded w-full py-2 px-3 text-stone-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Ex: vestido-floral-vermelho" required>
+                </div>
+                <div>
+                    <label for="productTitle" class="block text-stone-700 text-sm font-bold mb-2">Título:</label>
+                    <input type="text" id="productTitle" class="shadow appearance-none border rounded w-full py-2 px-3 text-stone-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Ex: Vestido de Festa Floral" required>
+                </div>
+                <div>
+                    <label for="productDescription" class="block text-stone-700 text-sm font-bold mb-2">Descrição:</label>
+                    <textarea id="productDescription" class="shadow appearance-none border rounded w-full py-2 px-3 text-stone-700 leading-tight focus:outline-none focus:shadow-outline h-24" placeholder="Descrição detalhada da roupa..." required></textarea>
+                </div>
+                <div>
+                    <label for="productImage" class="block text-stone-700 text-sm font-bold mb-2">URL da Imagem:</label>
+                    <input type="url" id="productImage" class="shadow appearance-none border rounded w-full py-2 px-3 text-stone-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Ex: https://exemplo.com/imagem.jpg" required>
+                </div>
+                <div>
+                    <label for="productWhatsappMessage" class="block text-stone-700 text-sm font-bold mb-2">Mensagem WhatsApp (pré-preenchida):</label>
+                    <textarea id="productWhatsappMessage" class="shadow appearance-none border rounded w-full py-2 px-3 text-stone-700 leading-tight focus:outline-none focus:shadow-outline h-24" placeholder="Ex: Olá, tenho interesse em alugar o Vestido Floral..."></textarea>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button type="submit" id="submitProductButton" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                        Adicionar Produto
+                    </button>
+                    <button type="button" id="cancelEditButton" class="bg-gray-400 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hidden" onclick="cancelEdit()">
+                        Cancelar Edição
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-xl p-8">
+            <h3 class="text-2xl font-semibold text-stone-800 mb-6">Roupas Existentes</h3>
+            <div id="adminProductList" class="space-y-4">
+                <!-- Lista de produtos para edição/remoção será renderizada aqui -->
+                <p class="text-stone-600 text-center">Carregando produtos...</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal de Detalhes da Peça -->
+    <div id="itemDetailsModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('itemDetailsModal')">&times;</span>
+            <div class="flex flex-col md:flex-row gap-8">
+                <div class="md:w-1/2">
+                    <img id="detailImage" src="" alt="Imagem da Roupa" class="w-full rounded-lg shadow-md mb-4">
+                </div>
+                <div class="md:w-1/2 bg-stone-100 p-6 rounded-lg">
+                    <h3 id="detailTitle" class="text-3xl font-bold text-stone-800 mb-4"></h3>
+                    <p id="detailDescription" class="text-stone-700 text-lg mb-6"></p>
+                    <p class="text-stone-800 text-xl font-semibold mb-6">Código da Peça: <span id="detailCode" class="text-stone-700"></span></p>
+                    
+                    <div class="flex flex-col sm:flex-row gap-3 mb-6">
+                        <!-- Botão WhatsApp -->
+                        <a id="whatsappLink" href="#" target="_blank" class="whatsapp-button w-full sm:w-auto">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="w-5 h-5 fill-current">
+                                <!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                                <path d="M380.9 97.1C339.4 55.6 283.9 32 224 32S108.6 55.6 67.1 97.1 32 184.1 32 243.9c0 40.6 11.1 79.7 32.5 113.8L32 480l116.6-31.4c33.4 18.2 70.6 27.6 106.9 27.6 59.9 0 115.4-23.6 156.9-65.1S416 299.9 416 240c0-59.9-23.6-115.4-65.1-156.9zM224 416c-35.3 0-69.8-9.6-99.7-27.9L119 380.8 67 493l116-31.3c29.9 18.2 64.4 27.5 99.7 27.5 54.3 0 102.6-21.2 139.4-58s58-85.1 58-139.4c0-54.3-21.2-102.6-58-139.4S278.3 80 224 80c-54.3 0-102.6 21.2-139.4 58S27.2 240 27.2 240c0 54.3 21.2 102.6 58 139.4S170.7 416 224 416zM349.1 270.3c-2.4-1.2-14.2-7-16.4-7.8-2.2-.8-3.8-1.2-5.4 1.2s-6.2 7.8-7.6 9.4c-1.4 1.6-2.8 1.8-5.2 .6-2.4-1.2-10.2-3.8-19.4-12-7.2-6.5-12-14.5-13.4-16.9-1.4-2.4-.1-3.6 1.1-5.9 1.1-2.2 2.4-3.8 3.6-5.9.6-1.1.3-2.2-.1-3.4-1.2-2.4-10.7-25.7-14.7-35.2-4.1-9.5-8.2-7.8-10.7-7.8-2.4 0-5.2-.3-7.8-.3s-6.8 .3-10.4 4.1c-3.6 3.8-13.8 13.5-13.8 33c0 19.5 14.2 38.1 16.2 40.5 2 2.4 27.9 42.7 67.8 59.1 39.9 16.4 48.2 14 56.7 12.8 8.5-1.2 27.9-11.4 31.8-22.3 3.9-10.9 3.9-20.2 2.7-22.3-1.2-2.2-4.6-3.4-9.1-5.7z"/>
+                            </svg>
+                            Quero Alugar! (WhatsApp)
+                        </a>
+                        <!-- Botão Instagram (opcional, pode ser um link direto para o perfil) -->
+                        <a id="instagramLink" href="https://www.instagram.com/seuperfil_instagram/" target="_blank" class="instagram-button w-full sm:w-auto">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="w-5 h-5 fill-current">
+                                <!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                                <path d="M224.1 140.7c-35.3 0-64 28.7-64 64s28.7 64 64 64 64-28.7 64-64-28.7-64-64-64zm125.1 11.7c-4.5-4.5-10.6-7-17-7s-12.5 2.5-17 7l-15.5 15.5c-4.5 4.5-7 10.6-7 17s2.5 12.5 7 17l15.5 15.5c4.5 4.5 10.6 7 17 7s12.5-2.5 17-7l15.5-15.5c4.5-4.5 7-10.6 7-17s-2.5-12.5-7-17zM224.1 32c-67.9 0-123.1 55.2-123.1 123.1v192.2c0 67.9 55.2 123.1 123.1 123.1h192.2c67.9 0 123.1-55.2 123.1-123.1V155.1c0-67.9-55.2-123.1-123.1-123.1H224.1zm192.2 305.3c0 26.6-21.7 48.3-48.3 48.3H224.1c-26.6 0-48.3-21.7-48.3-48.3V155.1c0-26.6 21.7-48.3 48.3-48.3h143.2c26.6 0 48.3 21.7 48.3 48.3v192.2z"/>
+                            </svg>
+                            Ver no Instagram
+                        </a>
+                    </div>
+
+                    <!-- Botão para Sugestão de Estilo Gemini -->
+                    <button id="getSuggestionButton" class="gemini-button w-full sm:w-auto">
+                        Obter Sugestão de Estilo ✨
+                    </button>
+                    <!-- Área para exibir a sugestão de estilo -->
+                    <div id="stylingSuggestion" class="mt-6 p-4 bg-stone-100 rounded-lg text-left text-stone-700 hidden">
+                        <p class="font-semibold mb-2">Sugestão de Estilo:</p>
+                        <div id="suggestionContent"></div>
+                        <div id="suggestionLoading" class="text-center mt-4 hidden">
+                            <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-stone-700 mx-auto"></div>
+                            <p class="text-sm text-stone-600 mt-2">A gerar sugestão...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Novo Modal "Como Funciona" -->
+    <div id="howItWorksModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('howItWorksModal')">&times;</span>
+            <h3 class="text-3xl font-bold text-stone-800 mb-6 text-center">Como Funciona o Aluguel de Roupas</h3>
+            <div class="text-stone-700 text-lg space-y-4">
+                <p><span class="font-semibold text-stone-900">1. Escolha a sua Peça:</span> Navegue pela nossa vasta coleção de roupas e encontre o look perfeito para a sua ocasião. Cada peça tem uma descrição detalhada e um código único.</p>
+                <p><span class="font-semibold text-stone-900">2. Entre em Contacto:</span> Ao encontrar a peça desejada, clique no botão "Quero Alugar!" na página de detalhes. Será redirecionado para o nosso WhatsApp ou Instagram com uma mensagem pré-preenchida, facilitando o contacto.</p>
+                <p><span class="font-semibold text-stone-900">3. Confirme o Aluguel:</span> A nossa equipa irá contactá-lo(a) para confirmar a disponibilidade da peça, discutir os detalhes do aluguer (data, duração, preço) e responder a quaisquer questões que possa ter.</p>
+                <p><span class="font-semibold text-stone-900">4. Retirada e Devolução:</span> Combine a retirada da peça na nossa loja. Após o evento, devolva a roupa na data acordada. Cuidamos da limpeza e manutenção para si!</p>
+                <p class="text-center mt-6 text-stone-600">É simples, rápido e sustentável!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Novo Modal "Contato" -->
+    <div id="contactModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('contactModal')">&times;</span>
+            <h3 class="text-3xl font-bold text-stone-800 mb-6 text-center">Entre em Contacto Connosco!</h3>
+            <div class="flex flex-col items-center space-y-6">
+                <!-- Botão WhatsApp -->
+                <a href="https://wa.me/5511999999999" target="_blank" class="whatsapp-button w-full sm:w-auto">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="w-6 h-6 fill-current">
+                        <!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                        <path d="M380.9 97.1C339.4 55.6 283.9 32 224 32S108.6 55.6 67.1 97.1 32 184.1 32 243.9c0 40.6 11.1 79.7 32.5 113.8L32 480l116.6-31.4c33.4 18.2 70.6 27.6 106.9 27.6 59.9 0 115.4-23.6 156.9-65.1S416 299.9 416 240c0-59.9-23.6-115.4-65.1-156.9zM224 416c-35.3 0-69.8-9.6-99.7-27.9L119 380.8 67 493l116-31.3c29.9 18.2 64.4 27.5 99.7 27.5 54.3 0 102.6-21.2 139.4-58s58-85.1 58-139.4c0-54.3-21.2-102.6-58-139.4S278.3 80 224 80c-54.3 0-102.6 21.2-139.4 58S27.2 240 27.2 240c0 54.3 21.2 102.6 58 139.4S170.7 416 224 416zM349.1 270.3c-2.4-1.2-14.2-7-16.4-7.8-2.2-.8-3.8-1.2-5.4 1.2s-6.2 7.8-7.6 9.4c-1.4 1.6-2.8 1.8-5.2 .6-2.4-1.2-10.2-3.8-19.4-12-7.2-6.5-12-14.5-13.4-16.9-1.4-2.4-.1-3.6 1.1-5.9 1.1-2.2 2.4-3.8 3.6-5.9.6-1.1.3-2.2-.1-3.4-1.2-2.4-10.7-25.7-14.7-35.2-4.1-9.5-8.2-7.8-10.7-7.8-2.4 0-5.2-.3-7.8-.3s-6.8 .3-10.4 4.1c-3.6 3.8-13.8 13.5-13.8 33c0 19.5 14.2 38.1 16.2 40.5 2 2.4 27.9 42.7 67.8 59.1 39.9 16.4 48.2 14 56.7 12.8 8.5-1.2 27.9-11.4 31.8-22.3 3.9-10.9 3.9-20.2 2.7-22.3-1.2-2.2-4.6-3.4-9.1-5.7z"/>
+                    </svg>
+                    WhatsApp
+                </a>
+                <!-- Botão Instagram -->
+                <a href="https://www.instagram.com/seuperfil_instagram/" target="_blank" class="instagram-button w-full sm:w-auto">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="w-6 h-6 fill-current">
+                        <!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                        <path d="M224.1 140.7c-35.3 0-64 28.7-64 64s28.7 64 64 64 64-28.7 64-64-28.7-64-64-64zm125.1 11.7c-4.5-4.5-10.6-7-17-7s-12.5 2.5-17 7l-15.5 15.5c-4.5 4.5-7 10.6-7 17s2.5 12.5 7 17l15.5 15.5c4.5 4.5 10.6 7 17 7s12.5-2.5 17-7l15.5-15.5c4.5-4.5 7-10.6 7-17s-2.5-12.5-7-17zM224.1 32c-67.9 0-123.1 55.2-123.1 123.1v192.2c0 67.9 55.2 123.1 123.1 123.1h192.2c67.9 0 123.1-55.2 123.1-123.1V155.1c0-67.9-55.2-123.1-123.1-123.1H224.1zm192.2 305.3c0 26.6-21.7 48.3-48.3 48.3H224.1c-26.6 0-48.3-21.7-48.3-48.3V155.1c0-26.6 21.7-48.3 48.3-48.3h143.2c26.6 0 48.3 21.7 48.3 48.3v192.2z"/>
+                    </svg>
+                    Instagram
+                </a>
+                <!-- Botão Email -->
+                <a href="mailto:seuemail@exemplo.com" class="email-button w-full sm:w-auto">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="w-6 h-6 fill-current">
+                        <!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                        <path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 351.2c12.1 9.1 28.1 9.1 40.2 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48H48zM0 176V384c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V176L294.4 361.6c-5.4 4.8-12.6 7.6-20 7.6s-14.6-2.8-20-7.6L0 176z"/>
+                    </svg>
+                    Email
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Rodapé -->
+    <footer class="bg-stone-900 text-stone-300 py-10 rounded-t-3xl">
+        <div class="container mx-auto px-4 text-center">
+            <p class="mb-4">&copy; 2024 Look de Hoje. Todos os direitos reservados.</p>
+            <div class="flex justify-center space-x-6">
+                <a href="https://wa.me/5511999999999" target="_blank" class="text-stone-300 hover:text-stone-50 transition duration-300">WhatsApp</a>
+                <a href="https://www.instagram.com/seuperfil_instagram/" target="_blank" class="text-stone-300 hover:text-stone-50 transition duration-300">Instagram</a>
+                <a href="mailto:seuemail@exemplo.com" class="text-stone-300 hover:text-stone-50 transition duration-300">Email</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Dados dos produtos (serão carregados da API PHP ou usarão fallback hardcoded)
+        let allProducts = {};
+
+        // Função para carregar os produtos da API PHP
+        async function loadProducts() {
+            try {
+                const response = await fetch('api.php?action=getProducts');
+                const result = await response.json();
+
+                if (result.success) {
+                    allProducts = result.data;
+                    console.log("Produtos carregados da API PHP:", allProducts);
+                } else {
+                    console.error("Erro ao carregar produtos da API PHP:", result.message);
+                    // Fallback para dados hardcoded se a API PHP falhar
+                    console.warn("Falha ao carregar produtos da API PHP. Usando dados hardcoded.");
+                    allProducts = {
+                        'vestido-vermelho': {
+                            title: 'Vestido de Festa Vermelho',
+                            description: 'Elegância e sofisticação para eventos especiais. Tecido: Seda. Tamanho: M. Cor: Vermelho vibrante. Perfeito para casamentos e formaturas.',
+                            image_url: 'https://placehold.co/600x400/FFC0CB/FFFFFF?text=Vestido+Vermelho',
+                            whatsapp_message: 'Olá, tenho interesse em alugar o Vestido de Festa Vermelho (código: vestido-vermelho) que vi no site. Poderia me passar mais informações?'
+                        },
+                        'terno-azul': {
+                            title: 'Terno Masculino Azul',
+                            description: 'Corte moderno para um visual impecável. Tamanho G.',
+                            image_url: 'https://placehold.co/600x400/ADD8E6/FFFFFF?text=Terno+Azul',
+                            whatsapp_message: 'Olá, tenho interesse em alugar o Terno Masculino Azul (código: terno-azul) que vi no site. Poderia me passar mais informações?'
+                        },
+                        'macacao-verde': {
+                            title: 'Macacão Casual Verde',
+                            description: 'Conforto e estilo para o dia a dia. Tamanho P.',
+                            image_url: 'https://placehold.co/600x400/90EE90/FFFFFF?text=Macacao+Verde',
+                            whatsapp_message: 'Olá, tenho interesse em alugar o Macacão Casual Verde (código: macacao-verde) que vi no site. Poderia me passar mais informações?'
+                        },
+                        'saia-amarela': {
+                            title: 'Saia Longa Amarela',
+                            description: 'Leve e fluida para um look de verão. Tamanho M.',
+                            image_url: 'https://placehold.co/600x400/F0E68C/000000?text=Saia+Longa',
+                            whatsapp_message: 'Olá, tenho interesse em alugar a Saia Longa Amarela (código: saia-amarela) que vi no site. Poderia me passar mais informações?'
+                        },
+                        'blazer-rosa': {
+                            title: 'Blazer Rosa Pastel',
+                            description: 'Toque de cor e elegância para o escritório. Tamanho P.',
+                            image_url: 'https://placehold.co/600x400/D8BFD8/000000?text=Blazer+Rosa',
+                            whatsapp_message: 'Olá, tenho interesse em alugar o Blazer Rosa Pastel (código: blazer-rosa) que vi no site. Poderia me passar mais informações?'
+                        },
+                        'camisa-azul': {
+                            title: 'Camisa Social Azul Clara',
+                            description: 'Clássica e versátil para diversas ocasiões. Tamanho G.',
+                            image_url: 'https://placehold.co/600x400/B0E0E6/000000?text=Camisa+Azul',
+                            whatsapp_message: 'Olá, tenho interesse em alugar a Camisa Social Azul Clara (código: camisa-azul) que vi no site. Poderia me passar mais informações?'
+                        },
+                        'vestido-bege': {
+                            title: 'Vestido Casual Bege',
+                            description: 'Vestido soltinho em linho, ideal para um passeio no parque ou um almoço casual. Tecido: Linho. Tamanho: M. Cor: Bege.',
+                            image_url: 'https://placehold.co/600x400/F5DEB3/000000?text=Vestido+Bege',
+                            whatsapp_message: 'Olá, tenho interesse em alugar o Vestido Casual Bege (código: vestido-bege) que vi no site. Poderia me passar mais informações?'
+                        },
+                        'calca-lilas': {
+                            title: 'Calça Pantalona Lilás',
+                            description: 'Calça de tecido leve com caimento perfeito. Tecido: Viscose. Tamanho: P. Cor: Lilás pastel. Combine com blusas soltas.',
+                            image_url: 'https://placehold.co/600x400/DDA0DD/000000?text=Calca+Lilac',
+                            whatsapp_message: 'Olá, tenho interesse em alugar a Calça Pantalona Lilás (código: calca-lilas) que vi no site. Poderia me passar mais informações?'
+                        },
+                        'vestido-pessego': {
+                            title: 'Vestido de Noite Pêssego',
+                            description: 'Deslumbrante para eventos noturnos. Tamanho M.',
+                            image_url: 'https://placehold.co/600x400/FFDAB9/000000?text=Vestido+Pessego',
+                            whatsapp_message: 'Olá, tenho interesse em alugar o Vestido de Noite Pêssego (código: vestido-pessego) que vi no site. Poderia me passar mais informações?'
+                        },
+                        'terno-cinza': {
+                            title: 'Terno Masculino Cinza Claro',
+                            description: 'Moderno e elegante para qualquer ocasião. Tamanho G.',
+                            image_url: 'https://placehold.co/600x400/E6E6FA/000000?text=Terno+Cinza',
+                            whatsapp_message: 'Olá, tenho interesse em alugar o Terno Masculino Cinza Claro (código: terno-cinza) que vi no site. Poderia me passar mais informações?'
+                        },
+                        'macacao-menta': {
+                            title: 'Macacão Verde Menta',
+                            description: 'Frescor e estilo para o verão. Tamanho M.',
+                            image_url: 'https://placehold.co/600x400/98FB98/000000?text=Macacao+Mint',
+                            whatsappMessage: 'Olá, tenho interesse em alugar o Macacão Verde Menta (código: macacao-menta) que vi no site. Poderia me passar mais informações?'
+                        },
+                        'vestido-amarelo-pastel': {
+                            title: 'Vestido de Festa Amarelo Pastel',
+                            description: 'Vestido com saia rodada e detalhes em bordado. Tecido: Tule. Tamanho: P. Cor: Amarelo pastel. Perfeito para festas de dia.',
+                            image_url: 'https://placehold.co/600x400/FFFACD/000000?text=Vestido+Amarelo',
+                            whatsappMessage: 'Olá, tenho interesse em alugar o Vestido de Festa Amarelo Pastel (código: vestido-amarelo-pastel) que vi no site. Poderia me passar mais informações?'
+                        },
+                        'blusa-seda-rosa': {
+                            title: 'Blusa de Seda Rosa',
+                            description: 'Luxo e conforto para um look sofisticado. Tamanho M.',
+                            image_url: 'https://placehold.co/600x400/FFB6C1/000000?text=Blusa+Rosa',
+                            whatsappMessage: 'Olá, tenho interesse em alugar a Blusa de Seda Rosa (código: blusa-seda-rosa) que vi no site. Poderia me passar mais informações?'
+                        },
+                        'saia-plissada-azul': {
+                            title: 'Saia Plissada Azul',
+                            description: 'Saia midi com plissado delicado. Tecido: Crepe. Tamanho: P. Cor: Azul claro. Perfeita para um look romântico.',
+                            image_url: 'https://placehold.co/600x400/87CEEB/000000?text=Saia+Azul',
+                            whatsappMessage: 'Olá, tenho interesse em alugar a Saia Plissada Azul (código: saia-plissada-azul) que vi no site. Poderia me passar mais informações?'
+                        },
+                        'vestido-prateado': {
+                            title: 'Vestido de Gala Prateado',
+                            description: 'Brilho e glamour para noites inesquecíveis. Tamanho G.',
+                            image_url: 'https://placehold.co/600x400/D3D3D3/000000?text=Vestido+Prata',
+                            whatsappMessage: 'Olá, tenho interesse em alugar o Vestido de Gala Prateado (código: vestido-prateado) que vi no site. Poderia me passar mais informações?'
+                        },
+                        'macacao-branco': {
+                            title: 'Macacão Elegante Branco',
+                            description: 'Sofisticação e modernidade em uma única peça. Tamanho M.',
+                            image_url: 'https://placehold.co/600x400/F0F8FF/000000?text=Macacao+Branco',
+                            whatsappMessage: 'Olá, tenho interesse em alugar o Macacão Elegante Branco (código: macacao-branco) que vi no site. Poderia me passar mais informações?'
+                        },
+                        'vestido-rosa-claro': {
+                            title: 'Vestido de Festa Rosa Claro',
+                            description: 'Romântico e delicado para ocasiões especiais. Tamanho P.',
+                            image_url: 'https://placehold.co/600x400/FFE4E1/000000?text=Vestido+Rosa+Claro',
+                            whatsappMessage: 'Olá, tenho interesse em alugar o Vestido de Festa Rosa Claro (código: vestido-rosa-claro) que vi no site. Poderia me passar mais informações?'
+                        }
+                    };
+                }
+                renderProducts(); // Renderiza os produtos após o carregamento (ou fallback)
+            } catch (error) {
+                console.error("Erro ao carregar produtos:", error);
+                // Fallback para dados hardcoded se a API PHP falhar
+                console.warn("Falha ao carregar produtos da API PHP. Usando dados hardcoded.");
+                allProducts = {
+                    'vestido-vermelho': {
+                        title: 'Vestido de Festa Vermelho',
+                        description: 'Elegância e sofisticação para eventos especiais. Tecido: Seda. Tamanho: M. Cor: Vermelho vibrante. Perfeito para casamentos e formaturas.',
+                        image_url: 'https://placehold.co/600x400/FFC0CB/FFFFFF?text=Vestido+Vermelho',
+                        whatsapp_message: 'Olá, tenho interesse em alugar o Vestido de Festa Vermelho (código: vestido-vermelho) que vi no site. Poderia me passar mais informações?'
+                    },
+                    'terno-azul': {
+                        title: 'Terno Masculino Azul',
+                        description: 'Corte moderno para um visual impecável. Tamanho G.',
+                        image_url: 'https://placehold.co/600x400/ADD8E6/FFFFFF?text=Terno+Azul',
+                        whatsapp_message: 'Olá, tenho interesse em alugar o Terno Masculino Azul (código: terno-azul) que vi no site. Poderia me passar mais informações?'
+                    },
+                    'macacao-verde': {
+                        title: 'Macacão Casual Verde',
+                        description: 'Conforto e estilo para o dia a dia. Tamanho P.',
+                        image_url: 'https://placehold.co/600x400/90EE90/FFFFFF?text=Macacao+Verde',
+                        whatsapp_message: 'Olá, tenho interesse em alugar o Macacão Casual Verde (código: macacao-verde) que vi no site. Poderia me passar mais informações?'
+                    },
+                    'saia-amarela': {
+                        title: 'Saia Longa Amarela',
+                        description: 'Leve e fluida para um look de verão. Tamanho M.',
+                        image_url: 'https://placehold.co/600x400/F0E68C/000000?text=Saia+Longa',
+                        whatsapp_message: 'Olá, tenho interesse em alugar a Saia Longa Amarela (código: saia-amarela) que vi no site. Poderia me passar mais informações?'
+                    },
+                    'blazer-rosa': {
+                        title: 'Blazer Rosa Pastel',
+                        description: 'Toque de cor e elegância para o escritório. Tamanho P.',
+                        image_url: 'https://placehold.co/600x400/D8BFD8/000000?text=Blazer+Rosa',
+                        whatsapp_message: 'Olá, tenho interesse em alugar o Blazer Rosa Pastel (código: blazer-rosa) que vi no site. Poderia me passar mais informações?'
+                    },
+                    'camisa-azul': {
+                        title: 'Camisa Social Azul Clara',
+                        description: 'Clássica e versátil para diversas ocasiões. Tamanho G.',
+                        image_url: 'https://placehold.co/600x400/B0E0E6/000000?text=Camisa+Azul',
+                        whatsapp_message: 'Olá, tenho interesse em alugar a Camisa Social Azul Clara (código: camisa-azul) que vi no site. Poderia me passar mais informações?'
+                    },
+                    'vestido-bege': {
+                        title: 'Vestido Casual Bege',
+                        description: 'Vestido soltinho em linho, ideal para um passeio no parque ou um almoço casual. Tecido: Linho. Tamanho: M. Cor: Bege.',
+                        image_url: 'https://placehold.co/600x400/F5DEB3/000000?text=Vestido+Bege',
+                        whatsapp_message: 'Olá, tenho interesse em alugar o Vestido Casual Bege (código: vestido-bege) que vi no site. Poderia me passar mais informações?'
+                    },
+                    'calca-lilas': {
+                        title: 'Calça Pantalona Lilás',
+                        description: 'Calça de tecido leve com caimento perfeito. Tecido: Viscose. Tamanho: P. Cor: Lilás pastel. Combine com blusas soltas.',
+                        image_url: 'https://placehold.co/600x400/DDA0DD/000000?text=Calca+Lilac',
+                        whatsapp_message: 'Olá, tenho interesse em alugar a Calça Pantalona Lilás (código: calca-lilas) que vi no site. Poderia me passar mais informações?'
+                    },
+                    'vestido-pessego': {
+                        title: 'Vestido de Noite Pêssego',
+                        description: 'Deslumbrante para eventos noturnos. Tamanho M.',
+                        image_url: 'https://placehold.co/600x400/FFDAB9/000000?text=Vestido+Pessego',
+                        whatsapp_message: 'Olá, tenho interesse em alugar o Vestido de Noite Pêssego (código: vestido-pessego) que vi no site. Poderia me passar mais informações?'
+                    },
+                    'terno-cinza': {
+                        title: 'Terno Masculino Cinza Claro',
+                        description: 'Moderno e elegante para qualquer ocasião. Tamanho G.',
+                        image_url: 'https://placehold.co/600x400/E6E6FA/000000?text=Terno+Cinza',
+                        whatsapp_message: 'Olá, tenho interesse em alugar o Terno Masculino Cinza Claro (código: terno-cinza) que vi no site. Poderia me passar mais informações?'
+                    },
+                    'macacao-menta': {
+                        title: 'Macacão Verde Menta',
+                        description: 'Frescor e estilo para o verão. Tamanho M.',
+                        image_url: 'https://placehold.co/600x400/98FB98/000000?text=Macacao+Mint',
+                        whatsapp_message: 'Olá, tenho interesse em alugar o Macacão Verde Menta (código: macacao-menta) que vi no site. Poderia me passar mais informações?'
+                    },
+                    'vestido-amarelo-pastel': {
+                        title: 'Vestido de Festa Amarelo Pastel',
+                        description: 'Vestido com saia rodada e detalhes em bordado. Tecido: Tule. Tamanho: P. Cor: Amarelo pastel. Perfeito para festas de dia.',
+                        image_url: 'https://placehold.co/600x400/FFFACD/000000?text=Vestido+Amarelo',
+                        whatsapp_message: 'Olá, tenho interesse em alugar o Vestido de Festa Amarelo Pastel (código: vestido-amarelo-pastel) que vi no site. Poderia me passar mais informações?'
+                    },
+                    'blusa-seda-rosa': {
+                        title: 'Blusa de Seda Rosa',
+                        description: 'Luxo e conforto para um look sofisticado. Tamanho M.',
+                        image_url: 'https://placehold.co/600x400/FFB6C1/000000?text=Blusa+Rosa',
+                        whatsapp_message: 'Olá, tenho interesse em alugar a Blusa de Seda Rosa (código: blusa-seda-rosa) que vi no site. Poderia me passar mais informações?'
+                    },
+                    'saia-plissada-azul': {
+                        title: 'Saia Plissada Azul',
+                        description: 'Saia midi com plissado delicado. Tecido: Crepe. Tamanho: P. Cor: Azul claro. Perfeita para um look romântico.',
+                        image_url: 'https://placehold.co/600x400/87CEEB/000000?text=Saia+Azul',
+                        whatsapp_message: 'Olá, tenho interesse em alugar a Saia Plissada Azul (código: saia-plissada-azul) que vi no site. Poderia me passar mais informações?'
+                    },
+                    'vestido-prateado': {
+                        title: 'Vestido de Gala Prateado',
+                        description: 'Brilho e glamour para noites inesquecíveis. Tamanho G.',
+                        image_url: 'https://placehold.co/600x400/D3D3D3/000000?text=Vestido+Prata',
+                        whatsapp_message: 'Olá, tenho interesse em alugar o Vestido de Gala Prateado (código: vestido-prateado) que vi no site. Poderia me passar mais informações?'
+                    },
+                    'macacao-branco': {
+                        title: 'Macacão Elegante Branco',
+                        description: 'Sofisticação e modernidade em uma única peça. Tamanho M.',
+                        image_url: 'https://placehold.co/600x400/F0F8FF/000000?text=Macacao+Branco',
+                        whatsapp_message: 'Olá, tenho interesse em alugar o Macacão Elegante Branco (código: macacao-branco) que vi no site. Poderia me passar mais informações?'
+                    },
+                    'vestido-rosa-claro': {
+                        title: 'Vestido de Festa Rosa Claro',
+                        description: 'Romântico e delicado para ocasiões especiais. Tamanho P.',
+                        image_url: 'https://placehold.co/600x400/FFE4E1/000000?text=Vestido+Rosa+Claro',
+                        whatsapp_message: 'Olá, tenho interesse em alugar o Vestido de Festa Rosa Claro (código: vestido-rosa-claro) que vi no site. Poderia me passar mais informações?'
+                    }
+                };
+            }
+            renderProducts(); // Renderiza os produtos após o carregamento (ou fallback)
+        }
+
+        // Função para renderizar os produtos na grelha
+        function renderProducts() {
+            const productGrid = document.getElementById('productGrid');
+            productGrid.innerHTML = ''; // Limpa os produtos existentes
+
+            for (const code in allProducts) {
+                const item = allProducts[code];
+                const productCardHtml = `
+                    <div class="bg-white rounded-2xl shadow-xl overflow-hidden transform hover:scale-105 transition duration-300 border border-stone-200">
+                        <img src="${item.image_url}" alt="${item.title}" class="w-full h-64 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/CCCCCC/000000?text=Imagem+Nao+Disponivel';">
+                        <div class="p-6">
+                            <h3 class="text-2xl font-semibold text-stone-800 mb-2">${item.title}</h3>
+                            <p class="text-stone-600 mb-4">${item.description.substring(0, 70)}...</p>
+                            <button class="bg-stone-700 hover:bg-stone-800 text-white font-bold py-3 px-6 rounded-full transition duration-300 text-sm"
+                                    onclick="showDetails('${code}')">
+                                Ver Detalhes
+                            </button>
+                        </div>
+                    </div>
+                `;
+                productGrid.insertAdjacentHTML('beforeend', productCardHtml);
+            }
+            renderAdminProducts(); // Atualiza a lista no painel de administração
+        }
+
+        // Função para renderizar os produtos no painel de administração
+        function renderAdminProducts() {
+            const adminProductList = document.getElementById('adminProductList');
+            adminProductList.innerHTML = ''; // Limpa a lista existente
+
+            if (Object.keys(allProducts).length === 0) {
+                adminProductList.innerHTML = '<p class="text-stone-600 text-center">Nenhum produto cadastrado.</p>';
+                return;
+            }
+
+            for (const code in allProducts) {
+                const item = allProducts[code];
+                const adminProductItemHtml = `
+                    <div class="flex items-center justify-between bg-stone-50 p-4 rounded-lg shadow-sm">
+                        <div class="flex-grow">
+                            <p class="font-semibold text-stone-800">${item.title} (<span class="text-stone-600 text-sm">${code}</span>)</p>
+                            <p class="text-stone-700 text-sm">${item.description.substring(0, 50)}...</p>
+                        </div>
+                        <div class="flex space-x-2">
+                            <button class="bg-blue-500 hover:bg-blue-600 text-white text-xs font-bold py-1 px-3 rounded-full" onclick="editProduct('${code}')">Editar</button>
+                            <button class="bg-red-500 hover:bg-red-600 text-white text-xs font-bold py-1 px-3 rounded-full" onclick="deleteProduct('${code}')">Remover</button>
+                        </div>
+                    </div>
+                `;
+                adminProductList.insertAdjacentHTML('beforeend', adminProductItemHtml);
+            }
+        }
+
+        // Função para adicionar/atualizar um produto
+        async function addProduct(event) {
+            event.preventDefault(); // Impede o recarregamento da página
+
+            const productCodeInput = document.getElementById('productCode');
+            const productTitle = document.getElementById('productTitle').value;
+            const productDescription = document.getElementById('productDescription').value;
+            const productImage = document.getElementById('productImage').value;
+            const productWhatsappMessage = document.getElementById('productWhatsappMessage').value;
+            const productIdToEdit = document.getElementById('productIdToEdit').value;
+
+            const method = productIdToEdit ? 'PUT' : 'POST'; // Determina se é PUT (edição) ou POST (adição)
+            const url = 'api.php'; // A API PHP lida com todos os métodos
+
+            const data = {
+                id: productCodeInput.value,
+                title: productTitle,
+                description: productDescription,
+                image: productImage,
+                whatsappMessage: productWhatsappMessage
+            };
+
+            if (!data.id || !data.title || !data.description || !data.image || !data.whatsappMessage) {
+                alert("Por favor, preencha todos os campos.");
+                return;
+            }
+
+            try {
+                const response = await fetch(url, {
+                    method: method,
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                const result = await response.json();
+
+                if (result.success) {
+                    alert(`Produto ${productIdToEdit ? 'atualizado' : 'adicionado'} com sucesso!`);
+                    cancelEdit(); // Limpa o formulário e volta para o modo de adição
+                    loadProducts(); // Recarrega a lista de produtos
+                } else {
+                    alert(`Erro ao ${productIdToEdit ? 'atualizar' : 'adicionar'} produto: ` + result.message);
+                }
+            } catch (e) {
+                console.error("Erro ao comunicar com a API PHP:", e);
+                alert(`Erro ao ${productIdToEdit ? 'atualizar' : 'adicionar'} produto. Verifique a consola para mais detalhes.`);
+            }
+        }
+
+        // Função para carregar dados de um produto no formulário para edição
+        function editProduct(code) {
+            const item = allProducts[code];
+            if (!item) {
+                console.error(`Item with code ${code} not found for editing.`);
+                return;
+            }
+
+            document.getElementById('productIdToEdit').value = code;
+            document.getElementById('productCode').value = item.id;
+            document.getElementById('productTitle').value = item.title;
+            document.getElementById('productDescription').value = item.description;
+            document.getElementById('productImage').value = item.image_url;
+            document.getElementById('productWhatsappMessage').value = item.whatsapp_message;
+
+            document.getElementById('productCode').disabled = true; // Impede a alteração do ID durante a edição
+            document.getElementById('submitProductButton').innerText = 'Atualizar Produto';
+            document.getElementById('cancelEditButton').classList.remove('hidden');
+
+            // Rola para o topo do painel de administração para ver o formulário
+            document.getElementById('adminPanel').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Função para remover um produto
+        async function deleteProduct(code) {
+            if (confirm(`Tem certeza que deseja remover o produto "${allProducts[code].title}"?`)) {
+                try {
+                    const response = await fetch(`api.php?id=${code}`, { // Passa o ID na URL para DELETE
+                        method: 'DELETE',
+                        headers: { 'Content-Type': 'application/json' }
+                    });
+                    const result = await response.json();
+
+                    if (result.success) {
+                        alert("Produto removido com sucesso!");
+                        loadProducts(); // Recarrega a lista de produtos
+                    } else {
+                        alert("Erro ao remover produto: " + result.message);
+                    }
+                } catch (e) {
+                    console.error("Erro ao comunicar com a API PHP:", e);
+                    alert("Erro ao remover produto. Verifique a consola para mais detalhes.");
+                }
+            }
+        }
+
+        // Função para cancelar a edição e limpar o formulário
+        function cancelEdit() {
+            document.getElementById('addProductForm').reset();
+            document.getElementById('productIdToEdit').value = '';
+            document.getElementById('productCode').disabled = false; // Reabilita o campo de código
+            document.getElementById('submitProductButton').innerText = 'Adicionar Produto';
+            document.getElementById('cancelEditButton').classList.add('hidden');
+        }
+
+        // Funções do Carrossel (mantidas do código anterior)
+        let slideIndex = 0;
+        let carouselImages;
+        let carouselDots;
+        let carouselInterval;
+
+        function showSlides() {
+            if (!carouselImages || carouselImages.length === 0) return;
+            for (let i = 0; i < carouselImages.length; i++) {
+                carouselImages[i].classList.remove('active');
+            }
+            for (let i = 0; i < carouselDots.length; i++) {
+                carouselDots[i].classList.remove('active');
+            }
+            if (slideIndex >= carouselImages.length) {
+                slideIndex = 0;
+            }
+            if (slideIndex < 0) {
+                slideIndex = carouselImages.length - 1;
+            }
+            carouselImages[slideIndex].classList.add('active');
+            carouselDots[slideIndex].classList.add('active');
+        }
+
+        function plusSlides(n) {
+            slideIndex += n;
+            showSlides();
+        }
+
+        function currentSlide(n) {
+            slideIndex = n;
+            showSlides();
+            stopCarousel();
+            startCarousel();
+        }
+
+        function startCarousel() {
+            stopCarousel();
+            carouselInterval = setInterval(() => {
+                plusSlides(1);
+            }, 3000);
+        }
+
+        function stopCarousel() {
+            clearInterval(carouselInterval);
+        }
+
+        // Funções de visibilidade de secções
+        function showSection(sectionId) {
+            const mainContent = document.getElementById('mainContent');
+            const adminPanel = document.getElementById('adminPanel');
+
+            if (sectionId === 'mainContent') {
+                mainContent.classList.remove('hidden');
+                adminPanel.classList.add('hidden');
+            } else if (sectionId === 'adminPanel') {
+                mainContent.classList.add('hidden');
+                adminPanel.classList.remove('hidden');
+                renderAdminProducts(); // Garante que a lista de admin está atualizada
+            }
+        }
+
+        function showAdminPanel() {
+            closeMobileMenu(); // Fecha o menu mobile
+            showSection('adminPanel');
+        }
+
+        // Funções de modais (mantidas do código anterior)
+        function closeMobileMenu() {
+            const mainNavigation = document.getElementById('mainNavigation');
+            if (mainNavigation && window.innerWidth < 640 && mainNavigation.classList.contains('is-open')) { 
+                mainNavigation.classList.remove('is-open');
+                setTimeout(() => {
+                    mainNavigation.classList.add('hidden');
+                    mainNavigation.classList.remove('flex');
+                }, 300);
+            }
+        }
+
+        async function getStylingSuggestion(itemTitle, itemDescription) {
+            const suggestionContentDiv = document.getElementById('suggestionContent');
+            const suggestionLoadingDiv = document.getElementById('suggestionLoading');
+            const stylingSuggestionDiv = document.getElementById('stylingSuggestion');
+
+            stylingSuggestionDiv.classList.remove('hidden');
+            suggestionContentDiv.innerHTML = '';
+            suggestionLoadingDiv.classList.remove('hidden');
+
+            const prompt = `Sugira um estilo completo para a seguinte peça de roupa, incluindo acessórios, sapatos e ocasiões ideais. A peça é: "${itemTitle}". Descrição: "${itemDescription}". Por favor, formate a resposta como uma lista de tópicos.`;
+
+            let chatHistory = [];
+            chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+
+            const payload = { contents: chatHistory };
+            const apiKey = "";
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const result = await response.json();
+
+                if (result.candidates && result.candidates.length > 0 &&
+                    result.candidates[0].content && result.candidates[0].content.parts &&
+                    result.candidates[0].content.parts.length > 0) {
+                    const text = result.candidates[0].content.parts[0].text;
+                    suggestionContentDiv.innerHTML = text.replace(/\n/g, '<br>');
+                } else {
+                    suggestionContentDiv.innerText = "Não foi possível gerar uma sugestão de estilo. Tente novamente.";
+                }
+            } catch (error) {
+                console.error("Erro ao chamar a API Gemini:", error);
+                suggestionContentDiv.innerText = "Ocorreu um erro ao gerar a sugestão. Por favor, tente novamente mais tarde.";
+            } finally {
+                suggestionLoadingDiv.classList.add('hidden');
+            }
+        }
+
+        function showDetails(code) {
+            closeMobileMenu();
+            const modal = document.getElementById('itemDetailsModal');
+            const item = allProducts[code];
+
+            if (!item) {
+                console.error(`Item with code ${code} not found in allProducts.`);
+                return;
+            }
+
+            document.getElementById('detailCode').innerText = item.id;
+            document.getElementById('detailTitle').innerText = item.titulo; // Usar 'titulo' do PHP
+            document.getElementById('detailDescription').innerText = item.descricao; // Usar 'descricao' do PHP
+            document.getElementById('detailImage').src = item.imagem_url; // Usar 'imagem_url' do PHP
+            document.getElementById('detailImage').onerror = function() {
+                this.onerror = null;
+                this.src = 'https://placehold.co/600x400/CCCCCC/000000?text=Imagem+Nao+Disponivel';
+            };
+
+            const whatsappMessage = encodeURIComponent(item.whatsapp_message); // Usar 'whatsapp_message' do PHP
+            const phoneNumber = '5511999999999';
+            const whatsappLink = `https://wa.me/${phoneNumber}?text=${whatsappMessage}`;
+            document.getElementById('whatsappLink').href = whatsappLink;
+
+            const getSuggestionButton = document.getElementById('getSuggestionButton');
+            getSuggestionButton.onclick = () => getStylingSuggestion(item.titulo, item.descricao);
+
+            document.getElementById('stylingSuggestion').classList.add('hidden');
+            document.getElementById('suggestionContent').innerHTML = '';
+            document.getElementById('suggestionLoading').classList.add('hidden');
+
+            modal.style.display = 'flex';
+            setTimeout(() => {
+                modal.classList.add('modal-active');
+            }, 10);
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.classList.remove('modal-active');
+            setTimeout(() => {
+                modal.style.display = 'none';
+            }, 300);
+        }
+
+        window.onclick = function(event) {
+            const itemModal = document.getElementById('itemDetailsModal');
+            const howItWorksModal = document.getElementById('howItWorksModal');
+            const contactModal = document.getElementById('contactModal');
+            const adminPanel = document.getElementById('adminPanel');
+            
+            if (event.target == itemModal && itemModal.classList.contains('modal-active')) {
+                closeModal('itemDetailsModal');
+            }
+            if (event.target == howItWorksModal && howItWorksModal.classList.contains('modal-active')) {
+                closeModal('howItWorksModal');
+            }
+            if (event.target == contactModal && contactModal.classList.contains('modal-active')) {
+                closeModal('contactModal');
+            }
+            // Se clicar fora do painel de administração e ele estiver visível
+            if (adminPanel && !adminPanel.classList.contains('hidden') && !adminPanel.contains(event.target) && event.target.id !== 'adminPanel' && event.target.id !== 'mobileMenuButton') {
+                hideAdminPanel(); // Esconde o painel de administração
+            }
+        }
+
+        function openHowItWorksModal() {
+            closeMobileMenu();
+            const modal = document.getElementById('howItWorksModal');
+            modal.style.display = 'flex';
+            setTimeout(() => {
+                modal.classList.add('modal-active');
+            }, 10);
+        }
+
+        function openContactModal() {
+            closeMobileMenu();
+            const modal = document.getElementById('contactModal');
+            modal.style.display = 'flex';
+            setTimeout(() => {
+                modal.classList.add('modal-active');
+            }, 10);
+        }
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', () => {
+            // Inicialização do carrossel
+            carouselImages = document.querySelectorAll('.carousel-image');
+            carouselDots = document.querySelectorAll('.dot');
+            showSlides();
+            startCarousel();
+
+            const carouselContainer = document.getElementById('mainCarousel');
+            if (carouselContainer) {
+                carouselContainer.addEventListener('mousedown', stopCarousel);
+                carouselContainer.addEventListener('mouseup', startCarousel);
+                carouselContainer.addEventListener('mouseleave', startCarousel);
+                carouselContainer.addEventListener('touchstart', stopCarousel);
+                carouselContainer.addEventListener('touchend', startCarousel);
+                carouselContainer.addEventListener('touchcancel', startCarousel);
+            }
+
+            // Event listener para o botão do menu mobile
+            const mobileMenuButton = document.getElementById('mobileMenuButton');
+            const mainNavigation = document.getElementById('mainNavigation');
+            if (mobileMenuButton && mainNavigation) {
+                mobileMenuButton.addEventListener('click', () => {
+                    if (mainNavigation.classList.contains('hidden')) {
+                        mainNavigation.classList.remove('hidden');
+                        mainNavigation.classList.add('flex');
+                        setTimeout(() => {
+                            mainNavigation.classList.add('is-open');
+                        }, 10);
+                    } else {
+                        mainNavigation.classList.remove('is-open');
+                        setTimeout(() => {
+                            mainNavigation.classList.add('hidden');
+                            mainNavigation.classList.remove('flex');
+                        }, 300);
+                    }
+                });
+            }
+
+            // Event listener para o formulário de adicionar produto
+            const addProductForm = document.getElementById('addProductForm');
+            if (addProductForm) {
+                addProductForm.addEventListener('submit', addProduct);
+            }
+
+            // Carrega os produtos ao carregar a página
+            loadProducts();
+        });
+    </script>
+</body>
+</html>
