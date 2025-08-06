@@ -2,16 +2,23 @@ import ProductCard from "./ProductCard";
 import { Button } from "@/components/ui/button";
 import { Filter, SlidersHorizontal } from "lucide-react";
 import { useState } from "react";
+import { useProducts } from "@/contexts/ProductContext";
 import dress1 from "@/assets/dress-1.jpg";
 import suit1 from "@/assets/suit-1.jpg";
 import casual1 from "@/assets/casual-1.jpg";
 
 const ProductSection = () => {
   const [selectedCategory, setSelectedCategory] = useState("Todos");
+  const { products: allProducts } = useProducts();
   
-  const categories = ["Todos", "Festa", "Trabalho", "Casual", "Casamento"];
+  // Filtrar apenas produtos disponíveis para exibição pública
+  const availableProducts = allProducts.filter(product => product.available);
   
-  const products = [
+  // Extrair categorias únicas dos produtos disponíveis
+  const categories = ["Todos", ...new Set(availableProducts.map(product => product.category))];
+  
+  // Produtos de fallback caso não haja produtos do admin
+  const fallbackProducts = [
     {
       id: "1",
       name: "Vestido Elegante Preto",
@@ -61,10 +68,14 @@ const ProductSection = () => {
       description: "Visual casual elegante para encontros e passeios urbanos."
     }
   ];
-
+  
+  // Usar produtos do admin se disponíveis, senão usar fallback
+  const productsToShow = availableProducts.length > 0 ? availableProducts : fallbackProducts;
+  
+  // Filtrar produtos por categoria
   const filteredProducts = selectedCategory === "Todos" 
-    ? products 
-    : products.filter(product => product.category === selectedCategory);
+    ? productsToShow 
+    : productsToShow.filter(product => product.category === selectedCategory);
 
   return (
     <section id="looks" className="py-20 bg-warm-white">

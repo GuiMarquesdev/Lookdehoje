@@ -72,9 +72,17 @@ const Footer = () => {
             <p className="text-background/70 text-sm">
               © 2025 LookdeHoje. Todos os direitos reservados.
             </p>
-            <p className="text-background/70 text-sm flex items-center gap-1">
-              Feito com <Heart size={14} className="text-gold" /> para mulheres que amam moda
-            </p>
+            <div className="flex items-center gap-4">
+              <p className="text-background/70 text-sm flex items-center gap-1">
+                Feito com <Heart size={14} className="text-gold" /> para mulheres que amam moda
+              </p>
+              <a 
+                href="/admin-login" 
+                className="text-background/30 hover:text-background/50 text-xs transition-colors"
+              >
+                Admin
+              </a>
+            </div>
           </div>
         </div>
       </div>
