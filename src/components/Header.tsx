@@ -21,6 +21,13 @@ const Header = () => {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex items-center">
+            <img
+              src="/lovable-uploads/e0a369ea-d985-4699-acaa-3e6f4bab85e4.png"
+              alt="Logo Look de Hoje Outlet Brechó"
+              className="h-8 w-auto md:h-10 mr-3"
+              loading="eager"
+              decoding="async"
+            />
             <h1 className="text-2xl font-bold bg-gradient-to-r from-gold to-gold-light bg-clip-text text-transparent">LookdeHoje</h1>
           </div>
 
