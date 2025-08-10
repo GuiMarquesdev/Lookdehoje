@@ -1,4 +1,5 @@
 import ProductCard from "./ProductCard";
+import ProductQuickView from "./ProductQuickView";
 import { Button } from "@/components/ui/button";
 import { Filter, SlidersHorizontal } from "lucide-react";
 import { useState } from "react";
@@ -10,6 +11,19 @@ import casual1 from "@/assets/casual-1.jpg";
 const ProductSection = () => {
   const [selectedCategory, setSelectedCategory] = useState("Todos");
   const { products: allProducts } = useProducts();
+  
+  type DisplayProduct = {
+    id: string;
+    name: string;
+    category: string;
+    price: string;
+    image: string;
+    description: string;
+    size?: string;
+    available?: boolean;
+  };
+
+  const [selectedProduct, setSelectedProduct] = useState<DisplayProduct | null>(null);
   
   // Filtrar apenas produtos disponíveis para exibição pública
   const availableProducts = allProducts.filter(product => product.available);
@@ -119,13 +133,21 @@ const ProductSection = () => {
 
         {/* Products Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredProducts.map((product) => (
+{filteredProducts.map((product) => (
             <ProductCard
               key={product.id}
               {...product}
+              onView={() => setSelectedProduct(product as unknown as DisplayProduct)}
             />
           ))}
         </div>
+
+        {/* Quick View Modal */}
+        <ProductQuickView
+          open={!!selectedProduct}
+          product={selectedProduct}
+          onClose={() => setSelectedProduct(null)}
+        />
 
         {/* Load More */}
         <div className="text-center mt-12">

@@ -10,9 +10,10 @@ interface ProductCardProps {
   price: string;
   image: string;
   description: string;
+  onView?: () => void;
 }
 
-const ProductCard = ({ id, name, category, price, image, description }: ProductCardProps) => {
+const ProductCard = ({ id, name, category, price, image, description, onView }: ProductCardProps) => {
   const [isFavorite, setIsFavorite] = useState(false);
 
   const handleWhatsApp = () => {
@@ -27,9 +28,13 @@ const ProductCard = ({ id, name, category, price, image, description }: ProductC
         <img
           src={image}
           alt={name}
-          className="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-500"
+          onClick={() => onView?.()}
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => { if (e.key === 'Enter') onView?.(); }}
+          className="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-500 cursor-zoom-in"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
         
         {/* Favorite Button */}
         <button
