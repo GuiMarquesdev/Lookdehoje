@@ -1,5 +1,15 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
+export interface Measurements {
+  bust?: string;
+  waist?: string;
+  hips?: string;
+  length?: string;
+  shoulder?: string;
+  sleeve?: string;
+  notes?: string;
+}
+
 export interface Product {
   id: string;
   name: string;
@@ -9,6 +19,7 @@ export interface Product {
   description: string;
   size: string;
   available: boolean;
+  measurements?: Measurements;
   createdAt: string;
   updatedAt: string;
 }

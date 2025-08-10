@@ -40,6 +40,15 @@ const AdminProductForm = ({ productId, onClose }: AdminProductFormProps) => {
     size: '',
     image: '',
     available: true,
+    measurements: {
+      bust: '',
+      waist: '',
+      hips: '',
+      length: '',
+      shoulder: '',
+      sleeve: '',
+      notes: '',
+    },
   });
 
   useEffect(() => {
@@ -54,6 +63,15 @@ const AdminProductForm = ({ productId, onClose }: AdminProductFormProps) => {
           size: product.size,
           image: product.image,
           available: product.available,
+          measurements: {
+            bust: product.measurements?.bust ?? '',
+            waist: product.measurements?.waist ?? '',
+            hips: product.measurements?.hips ?? '',
+            length: product.measurements?.length ?? '',
+            shoulder: product.measurements?.shoulder ?? '',
+            sleeve: product.measurements?.sleeve ?? '',
+            notes: product.measurements?.notes ?? '',
+          },
         });
         setIsEditing(true);
       }
@@ -96,6 +114,9 @@ const AdminProductForm = ({ productId, onClose }: AdminProductFormProps) => {
         size: '',
         image: '',
         available: true,
+        measurements: {
+          bust: '', waist: '', hips: '', length: '', shoulder: '', sleeve: '', notes: ''
+        }
       });
 
       onClose();
@@ -225,6 +246,109 @@ const AdminProductForm = ({ productId, onClose }: AdminProductFormProps) => {
               placeholder="Descreva os detalhes do produto..."
               rows={3}
             />
+          </div>
+          {/* Medidas (opcional) */}
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-foreground">
+              Medidas (opcional)
+            </label>
+            <p className="text-xs text-muted-foreground">
+              Informe as medidas exatas para melhor ajuste (ex: 92 cm).
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="space-y-1">
+                <span className="text-xs text-muted-foreground">Busto</span>
+                <Input
+                  value={formData.measurements?.bust || ''}
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      measurements: { ...prev.measurements, bust: e.target.value },
+                    }))
+                  }
+                  placeholder="Ex: 92 cm"
+                />
+              </div>
+              <div className="space-y-1">
+                <span className="text-xs text-muted-foreground">Cintura</span>
+                <Input
+                  value={formData.measurements?.waist || ''}
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      measurements: { ...prev.measurements, waist: e.target.value },
+                    }))
+                  }
+                  placeholder="Ex: 70 cm"
+                />
+              </div>
+              <div className="space-y-1">
+                <span className="text-xs text-muted-foreground">Quadril</span>
+                <Input
+                  value={formData.measurements?.hips || ''}
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      measurements: { ...prev.measurements, hips: e.target.value },
+                    }))
+                  }
+                  placeholder="Ex: 98 cm"
+                />
+              </div>
+              <div className="space-y-1">
+                <span className="text-xs text-muted-foreground">Comprimento</span>
+                <Input
+                  value={formData.measurements?.length || ''}
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      measurements: { ...prev.measurements, length: e.target.value },
+                    }))
+                  }
+                  placeholder="Ex: 140 cm"
+                />
+              </div>
+              <div className="space-y-1">
+                <span className="text-xs text-muted-foreground">Ombro</span>
+                <Input
+                  value={formData.measurements?.shoulder || ''}
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      measurements: { ...prev.measurements, shoulder: e.target.value },
+                    }))
+                  }
+                  placeholder="Ex: 38 cm"
+                />
+              </div>
+              <div className="space-y-1">
+                <span className="text-xs text-muted-foreground">Manga</span>
+                <Input
+                  value={formData.measurements?.sleeve || ''}
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      measurements: { ...prev.measurements, sleeve: e.target.value },
+                    }))
+                  }
+                  placeholder="Ex: 60 cm"
+                />
+              </div>
+            </div>
+            <div className="space-y-1">
+              <span className="text-xs text-muted-foreground">Observações</span>
+              <Textarea
+                value={formData.measurements?.notes || ''}
+                onChange={(e) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    measurements: { ...prev.measurements, notes: e.target.value },
+                  }))
+                }
+                placeholder="Ex: tecido com leve elasticidade..."
+                rows={2}
+              />
+            </div>
           </div>
 
           {/* Upload de Imagem */}
