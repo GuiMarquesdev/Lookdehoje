@@ -10,6 +10,7 @@ import casual1 from "@/assets/casual-1.jpg";
 
 const ProductSection = () => {
   const [selectedCategory, setSelectedCategory] = useState("Todos");
+  const [visibleCount, setVisibleCount] = useState(6);
   const { products: allProducts } = useProducts();
   
   type DisplayProduct = {
@@ -90,6 +91,8 @@ const ProductSection = () => {
   const filteredProducts = selectedCategory === "Todos" 
     ? productsToShow 
     : productsToShow.filter(product => product.category === selectedCategory);
+  // Limitar exibição inicial a 6 produtos
+  const displayedProducts = filteredProducts.slice(0, visibleCount);
 
   return (
     <section id="looks" className="py-20 bg-warm-white">
@@ -117,7 +120,7 @@ const ProductSection = () => {
                 key={category}
                 variant={selectedCategory === category ? "default" : "outline"}
                 size="sm"
-                onClick={() => setSelectedCategory(category)}
+                onClick={() => { setSelectedCategory(category); setVisibleCount(6); }}
                 className={selectedCategory === category ? "shadow-gold" : ""}
               >
                 {category}
@@ -133,7 +136,7 @@ const ProductSection = () => {
 
         {/* Products Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-{filteredProducts.map((product) => (
+{displayedProducts.map((product) => (
             <ProductCard
               key={product.id}
               {...product}
@@ -150,11 +153,18 @@ const ProductSection = () => {
         />
 
         {/* Load More */}
-        <div className="text-center mt-12">
-          <Button variant="outline" size="lg" className="hover:bg-gold hover:text-background hover:border-gold">
-            Ver Mais Looks
-          </Button>
-        </div>
+        {filteredProducts.length > visibleCount && (
+          <div className="text-center mt-12">
+            <Button
+              variant="outline"
+              size="lg"
+              className="hover:bg-gold hover:text-background hover:border-gold"
+              onClick={() => setVisibleCount(filteredProducts.length)}
+            >
+              Ver Mais Looks
+            </Button>
+          </div>
+        )}
       </div>
     </section>
   );
