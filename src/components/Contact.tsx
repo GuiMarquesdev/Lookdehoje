@@ -34,7 +34,7 @@ const Contact = () => {
               <Card className="hover:shadow-elegant transition-all duration-300 border-border/50 hover:border-gold/30">
                 <CardContent className="p-6">
                   <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+                    <div className="w-12 h-12 flex items-center justify-center">
                       <Phone size={24} className="text-green-600" />
                     </div>
                     <div className="flex-1">
@@ -58,7 +58,7 @@ const Contact = () => {
               <Card className="hover:shadow-elegant transition-all duration-300 border-border/50 hover:border-gold/30">
                 <CardContent className="p-6">
                   <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-pink-100 rounded-full flex items-center justify-center">
+                    <div className="w-12 h-12 flex items-center justify-center">
                       <Instagram size={24} className="text-pink-600" />
                     </div>
                     <div className="flex-1">
@@ -82,7 +82,7 @@ const Contact = () => {
               <Card className="hover:shadow-elegant transition-all duration-300 border-border/50 hover:border-gold/30">
                 <CardContent className="p-6">
                   <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                    <div className="w-12 h-12 flex items-center justify-center">
                       <Mail size={24} className="text-blue-600" />
                     </div>
                     <div className="flex-1">
@@ -108,7 +108,7 @@ const Contact = () => {
               <Card className="border-border/50">
                 <CardContent className="p-6">
                   <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-gold/10 rounded-full flex items-center justify-center">
+                    <div className="w-12 h-12 flex items-center justify-center">
                       <Clock size={24} className="text-gold" />
                     </div>
                     <div>
@@ -127,7 +127,7 @@ const Contact = () => {
               <Card className="border-border/50">
                 <CardContent className="p-6">
                   <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-gold/10 rounded-full flex items-center justify-center">
+                    <div className="w-12 h-12 flex items-center justify-center">
                       <MapPin size={24} className="text-gold" />
                     </div>
                     <div>
