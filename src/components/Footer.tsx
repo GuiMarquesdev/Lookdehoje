@@ -6,9 +6,15 @@ const Footer = () => {
           {/* Brand */}
           <div className="space-y-6">
             <div>
-              <h3 className="text-2xl font-bold bg-gradient-to-r from-gold to-gold-light bg-clip-text text-transparent mb-2">LookdeHoje
-
-            </h3>
+              <img
+                src="/lovable-uploads/4af0f4b1-bae5-43b5-ab9b-8b9723265bff.png"
+                alt="Look de Hoje Outlet Brechó - logo"
+                className="h-12 w-auto mb-3 select-none"
+                loading="lazy"
+              />
+              <h3 className="text-2xl font-bold bg-gradient-to-r from-gold to-gold-light bg-clip-text text-transparent mb-2">
+                LookdeHoje
+              </h3>
               <p className="text-background/70 leading-relaxed">
                 Aluguel de looks exclusivos para ocasiões especiais. 
                 Vista-se com elegância sem compromisso.
