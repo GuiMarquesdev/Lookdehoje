@@ -16,7 +16,7 @@ export const useAuth = () => {
   return context;
 };
 
-const ADMIN_PASSWORD = 'admin123'; // Senha definida no código
+const ADMIN_PASSWORD = 'brechofamilia2021'; // Senha definida no código
 const AUTH_STORAGE_KEY = 'fashion_rental_auth';
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
