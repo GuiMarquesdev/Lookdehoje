@@ -13,6 +13,7 @@ const AdminHeroManager = () => {
   const { toast } = useToast();
   const [newImageUrl, setNewImageUrl] = useState("");
   const [newImageAlt, setNewImageAlt] = useState("");
+  const [uploadedImage, setUploadedImage] = useState<string | null>(null);
 
   const handleModeChange = (newMode: HeroImageMode) => {
     setMode(newMode);
@@ -22,11 +23,24 @@ const AdminHeroManager = () => {
     });
   };
 
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        setUploadedImage(event.target?.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const handleAddImage = () => {
-    if (!newImageUrl.trim() || !newImageAlt.trim()) {
+    const imageUrl = uploadedImage || newImageUrl.trim();
+    
+    if (!imageUrl || !newImageAlt.trim()) {
       toast({
         title: "Erro",
-        description: "URL e texto alternativo são obrigatórios",
+        description: "Imagem e texto alternativo são obrigatórios",
         variant: "destructive"
       });
       return;
@@ -43,11 +57,12 @@ const AdminHeroManager = () => {
 
     try {
       addImage({
-        url: newImageUrl,
+        url: imageUrl,
         alt: newImageAlt
       });
       setNewImageUrl("");
       setNewImageAlt("");
+      setUploadedImage(null);
       toast({
         title: "Imagem adicionada",
         description: "Nova imagem foi adicionada com sucesso"
@@ -162,27 +177,78 @@ const AdminHeroManager = () => {
                     <Plus className="h-4 w-4" />
                     Adicionar Nova Imagem
                   </div>
-                  <div className="space-y-3">
+                  <div className="space-y-4">
+                    {/* Upload de Imagem */}
                     <div>
-                      <Label htmlFor="imageUrl" className="text-sm">URL da Imagem</Label>
-                      <Input
-                        id="imageUrl"
-                        placeholder="https://exemplo.com/imagem.jpg"
-                        value={newImageUrl}
-                        onChange={(e) => setNewImageUrl(e.target.value)}
-                      />
+                      <Label className="text-sm font-medium">Imagem</Label>
+                      <div className="border-2 border-dashed border-border rounded-lg p-4 text-center mt-2">
+                        {uploadedImage ? (
+                          <div className="space-y-3">
+                            <img
+                              src={uploadedImage}
+                              alt="Preview"
+                              className="mx-auto max-h-32 rounded-lg object-cover"
+                            />
+                            <Button
+                              type="button"
+                              variant="outline"
+                              size="sm"
+                              onClick={() => setUploadedImage(null)}
+                            >
+                              Remover Imagem
+                            </Button>
+                          </div>
+                        ) : (
+                          <div className="space-y-3">
+                            <Upload className="mx-auto w-8 h-8 text-muted-foreground" />
+                            <div>
+                              <label className="cursor-pointer">
+                                <span className="bg-primary hover:bg-primary/90 text-primary-foreground px-4 py-2 rounded-md text-sm font-medium transition-colors">
+                                  Escolher Arquivo
+                                </span>
+                                <input
+                                  type="file"
+                                  accept="image/*"
+                                  onChange={handleImageUpload}
+                                  className="hidden"
+                                />
+                              </label>
+                              <p className="text-xs text-muted-foreground mt-1">
+                                PNG, JPG até 5MB
+                              </p>
+                            </div>
+                          </div>
+                        )}
+                      </div>
                     </div>
+                    
+                    {/* URL alternativa */}
+                    {!uploadedImage && (
+                      <div>
+                        <Label className="text-sm text-muted-foreground">Ou cole uma URL</Label>
+                        <Input
+                          placeholder="https://exemplo.com/imagem.jpg"
+                          value={newImageUrl}
+                          onChange={(e) => setNewImageUrl(e.target.value)}
+                          className="mt-1"
+                        />
+                      </div>
+                    )}
+
+                    {/* Texto alternativo */}
                     <div>
-                      <Label htmlFor="imageAlt" className="text-sm">Texto Alternativo</Label>
+                      <Label htmlFor="imageAlt" className="text-sm">Texto Alternativo *</Label>
                       <Input
                         id="imageAlt"
                         placeholder="Descrição da imagem"
                         value={newImageAlt}
                         onChange={(e) => setNewImageAlt(e.target.value)}
+                        className="mt-1"
                       />
                     </div>
+                    
                     <Button onClick={handleAddImage} className="w-full">
-                      <Upload className="h-4 w-4 mr-2" />
+                      <Plus className="h-4 w-4 mr-2" />
                       Adicionar Imagem
                     </Button>
                   </div>
