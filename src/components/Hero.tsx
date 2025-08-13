@@ -1,16 +1,46 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Sparkles } from "lucide-react";
+import { useHero } from "@/contexts/HeroContext";
+import { useEffect, useState } from "react";
 
 const Hero = () => {
+  const { mode, images } = useHero();
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  useEffect(() => {
+    if (mode === 'carousel' && images.length > 1) {
+      const interval = setInterval(() => {
+        setCurrentImageIndex((prev) => (prev + 1) % images.length);
+      }, 5000); // Troca a cada 5 segundos
+
+      return () => clearInterval(interval);
+    }
+  }, [mode, images.length]);
+
+  const currentImage = images[currentImageIndex] || images[0];
+
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background Image */}
       <div className="absolute inset-0">
-        <img
-          src="/lovable-uploads/4d8afebf-4451-456f-9224-6d0bb556cd5a.png"
-          alt="Elegant fashion collection"
-          className="w-full h-full object-cover"
-        />
+        {mode === 'carousel' && images.length > 1 ? (
+          images.map((image, index) => (
+            <img
+              key={image.id}
+              src={image.url}
+              alt={image.alt}
+              className={`absolute w-full h-full object-cover transition-opacity duration-1000 ${
+                index === currentImageIndex ? 'opacity-100' : 'opacity-0'
+              }`}
+            />
+          ))
+        ) : (
+          <img
+            src={currentImage?.url || '/lovable-uploads/4d8afebf-4451-456f-9224-6d0bb556cd5a.png'}
+            alt={currentImage?.alt || 'Elegant fashion collection'}
+            className="w-full h-full object-cover"
+          />
+        )}
         <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/70 to-transparent" />
       </div>
 

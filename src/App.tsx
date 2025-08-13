@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { ProductProvider } from "@/contexts/ProductContext";
+import { HeroProvider } from "@/contexts/HeroContext";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import AdminLogin from "./pages/AdminLogin";
@@ -17,7 +18,8 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <AuthProvider>
       <ProductProvider>
-        <TooltipProvider>
+        <HeroProvider>
+          <TooltipProvider>
           <Toaster />
           <Sonner />
           <BrowserRouter>
@@ -37,6 +39,7 @@ const App = () => (
             </Routes>
           </BrowserRouter>
         </TooltipProvider>
+        </HeroProvider>
       </ProductProvider>
     </AuthProvider>
   </QueryClientProvider>

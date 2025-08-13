@@ -7,9 +7,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { LogOut, Plus, Search, Package, TrendingUp, Users, Eye, EyeOff } from "lucide-react";
+import { LogOut, Plus, Search, Package, TrendingUp, Users, Eye, EyeOff, Image } from "lucide-react";
 import AdminProductForm from "@/components/AdminProductForm";
 import AdminProductList from "@/components/AdminProductList";
+import AdminHeroManager from "@/components/AdminHeroManager";
 
 const AdminDashboard = () => {
   const { logout } = useAuth();
@@ -119,6 +120,10 @@ const AdminDashboard = () => {
           <TabsList className="bg-background border border-border/50">
             <TabsTrigger value="products">Gerenciar Produtos</TabsTrigger>
             <TabsTrigger value="add">Adicionar Produto</TabsTrigger>
+            <TabsTrigger value="hero">
+              <Image className="w-4 h-4 mr-2" />
+              Hero/Banner
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="products" className="space-y-6">
@@ -203,6 +208,10 @@ const AdminDashboard = () => {
               productId={editingProduct}
               onClose={handleCloseForm}
             />
+          </TabsContent>
+
+          <TabsContent value="hero">
+            <AdminHeroManager />
           </TabsContent>
         </Tabs>
 
