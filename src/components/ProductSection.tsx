@@ -19,6 +19,7 @@ const ProductSection = () => {
     category: string;
     price: string;
     image: string;
+    additionalImages?: string[];
     description: string;
     size?: string;
     available?: boolean;
@@ -140,7 +141,7 @@ const ProductSection = () => {
             <ProductCard
               key={product.id}
               {...product}
-              onView={() => setSelectedProduct(product as unknown as DisplayProduct)}
+              onView={() => setSelectedProduct(product)}
             />
           ))}
         </div>

@@ -39,6 +39,7 @@ const AdminProductForm = ({ productId, onClose }: AdminProductFormProps) => {
     price: '',
     size: '',
     image: '',
+    additionalImages: [] as string[],
     available: true,
     measurements: {
       bust: '',
@@ -62,6 +63,7 @@ const AdminProductForm = ({ productId, onClose }: AdminProductFormProps) => {
           price: product.price,
           size: product.size,
           image: product.image,
+          additionalImages: product.additionalImages || [],
           available: product.available,
           measurements: {
             bust: product.measurements?.bust ?? '',
@@ -113,6 +115,7 @@ const AdminProductForm = ({ productId, onClose }: AdminProductFormProps) => {
         price: '',
         size: '',
         image: '',
+        additionalImages: [],
         available: true,
         measurements: {
           bust: '', waist: '', hips: '', length: '', shoulder: '', sleeve: '', notes: ''
@@ -129,19 +132,28 @@ const AdminProductForm = ({ productId, onClose }: AdminProductFormProps) => {
     }
   };
 
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>, isAdditional = false) => {
     const file = e.target.files?.[0];
     if (file) {
-      // Simular upload da imagem - em um caso real, você faria upload para um servidor
       const reader = new FileReader();
       reader.onload = (event) => {
-        setFormData(prev => ({
-          ...prev,
-          image: event.target?.result as string
-        }));
+        const result = event.target?.result as string;
+        if (isAdditional) {
+          setFormData(prev => ({
+            ...prev,
+            additionalImages: [...prev.additionalImages, result]
+          }));
+        } else {
+          setFormData(prev => ({
+            ...prev,
+            image: result
+          }));
+        }
       };
       reader.readAsDataURL(file);
     }
+    // Reset input
+    e.target.value = '';
   };
 
   return (
@@ -351,17 +363,17 @@ const AdminProductForm = ({ productId, onClose }: AdminProductFormProps) => {
             </div>
           </div>
 
-          {/* Upload de Imagem */}
+          {/* Upload de Imagem Principal */}
           <div className="space-y-2">
             <label className="text-sm font-medium text-foreground">
-              Imagem do Produto
+              Imagem Principal do Produto
             </label>
             <div className="border-2 border-dashed border-border rounded-lg p-6 text-center">
               {formData.image ? (
                 <div className="space-y-4">
                   <img
                     src={formData.image}
-                    alt="Preview"
+                    alt="Preview principal"
                     className="mx-auto max-h-40 rounded-lg object-cover"
                   />
                   <Button
@@ -378,12 +390,12 @@ const AdminProductForm = ({ productId, onClose }: AdminProductFormProps) => {
                   <div>
                     <label className="cursor-pointer">
                       <span className="bg-gold hover:bg-gold-dark text-background px-4 py-2 rounded-md text-sm font-medium transition-colors">
-                        Escolher Arquivo
+                        Escolher Arquivo Principal
                       </span>
                       <input
                         type="file"
                         accept="image/*"
-                        onChange={handleImageUpload}
+                        onChange={(e) => handleImageUpload(e, false)}
                         className="hidden"
                       />
                     </label>
@@ -394,6 +406,62 @@ const AdminProductForm = ({ productId, onClose }: AdminProductFormProps) => {
                 </div>
               )}
             </div>
+          </div>
+
+          {/* Upload de Imagens Adicionais */}
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-foreground">
+              Imagens Adicionais (máximo 2)
+            </label>
+            <p className="text-xs text-muted-foreground">
+              Adicione fotos de diferentes ângulos para melhor visualização do produto
+            </p>
+            {formData.additionalImages.length > 0 && (
+              <div className="grid grid-cols-2 gap-4 mb-4">
+                {formData.additionalImages.map((img, index) => (
+                  <div key={index} className="relative">
+                    <img
+                      src={img}
+                      alt={`Preview adicional ${index + 1}`}
+                      className="w-full h-32 object-cover rounded-lg border border-border"
+                    />
+                    <Button
+                      type="button"
+                      size="icon"
+                      variant="destructive"
+                      onClick={() => setFormData(prev => ({
+                        ...prev,
+                        additionalImages: prev.additionalImages.filter((_, i) => i !== index)
+                      }))}
+                      className="absolute -top-2 -right-2 w-6 h-6 rounded-full"
+                    >
+                      <X size={12} />
+                    </Button>
+                  </div>
+                ))}
+              </div>
+            )}
+            {formData.additionalImages.length < 2 && (
+              <div className="border-2 border-dashed border-border rounded-lg p-4 text-center">
+                <div className="space-y-2">
+                  <Upload className="mx-auto w-6 h-6 text-muted-foreground" />
+                  <label className="cursor-pointer">
+                    <span className="bg-gold hover:bg-gold-dark text-background px-3 py-1.5 rounded-md text-sm font-medium transition-colors">
+                      Adicionar Imagem ({formData.additionalImages.length}/2)
+                    </span>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) => handleImageUpload(e, true)}
+                      className="hidden"
+                    />
+                  </label>
+                  <p className="text-xs text-muted-foreground">
+                    PNG, JPG até 5MB
+                  </p>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Disponibilidade */}

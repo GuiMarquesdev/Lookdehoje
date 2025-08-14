@@ -9,6 +9,7 @@ interface ProductCardProps {
   category: string;
   price: string;
   image: string;
+  additionalImages?: string[];
   description: string;
   onView?: () => void;
 }
