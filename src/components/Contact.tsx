@@ -145,7 +145,7 @@ const Contact = () => {
               </Card>
 
               {/* CTA */}
-              <div className="bg-gradient-to-br from-gold/10 to-gold-light/5 rounded-xl p-6 border border-gold/20">
+              <div className="bg-gold-soft rounded-xl p-6 border border-gold-solid/40">
                 <h4 className="text-lg font-semibold text-foreground mb-3">
                   Atendimento Personalizado
                 </h4>

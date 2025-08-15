@@ -42,8 +42,8 @@ const ProductCard = ({ id, name, category, price, image, description, onView }: 
           onClick={() => setIsFavorite(!isFavorite)}
           className={`absolute top-4 right-4 p-2 rounded-full backdrop-blur-sm transition-all duration-200 ${
             isFavorite 
-              ? 'bg-gold/20 text-gold' 
-              : 'bg-background/20 text-foreground hover:bg-gold/20 hover:text-gold'
+              ? 'bg-gold-solid text-background' 
+              : 'bg-gold-soft text-gold-dark hover:bg-gold-solid hover:text-background'
           }`}
         >
           <Heart size={18} fill={isFavorite ? 'currentColor' : 'none'} />
@@ -51,7 +51,7 @@ const ProductCard = ({ id, name, category, price, image, description, onView }: 
 
         {/* Category Badge */}
         <div className="absolute top-4 left-4">
-          <span className="px-3 py-1 bg-background/90 backdrop-blur-sm text-xs font-medium text-foreground rounded-full border border-border/50">
+          <span className="px-3 py-1 bg-gold-solid backdrop-blur-sm text-xs font-medium text-background rounded-full border border-gold/30">
             {category}
           </span>
         </div>
@@ -60,7 +60,7 @@ const ProductCard = ({ id, name, category, price, image, description, onView }: 
         <div className="absolute bottom-4 left-4 right-4 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
           <Button 
             onClick={handleWhatsApp}
-            className="w-full bg-background/90 text-foreground hover:bg-gold hover:text-background backdrop-blur-sm border border-border/50"
+            className="w-full bg-gold-solid text-background hover:bg-gold hover:text-background backdrop-blur-sm border border-gold/30"
             size="sm"
           >
             <ShoppingBag size={16} className="mr-2" />

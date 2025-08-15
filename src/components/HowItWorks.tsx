@@ -50,7 +50,7 @@ const HowItWorks = () => {
                 
                 {/* Icon */}
                 <div className="flex justify-center mb-6 mt-4">
-                  <div className="w-16 h-16 bg-cream rounded-full flex items-center justify-center group-hover:bg-gold group-hover:text-background transition-all duration-300">
+                  <div className="w-16 h-16 bg-gold-soft rounded-full flex items-center justify-center group-hover:bg-gold group-hover:text-background transition-all duration-300">
                     <step.icon size={28} />
                   </div>
                 </div>
@@ -69,7 +69,7 @@ const HowItWorks = () => {
 
         {/* CTA */}
         <div className="text-center mt-16">
-          <div className="bg-gradient-to-r from-gold/10 to-gold-light/10 rounded-2xl p-8 max-w-2xl mx-auto border border-gold/20">
+          <div className="bg-gold-soft rounded-2xl p-8 max-w-2xl mx-auto border border-gold-solid/40">
             <h3 className="text-2xl font-bold text-foreground mb-4">
               Pronta para arrasar?
             </h3>
